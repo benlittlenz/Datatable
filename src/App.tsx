@@ -4,23 +4,34 @@ import DataTable from "./components/DataTable";
 
 const columns = [
   {
+    id: 0,
     name: "Title A",
+    selector: (row: any) => row.title,
   },
   {
-    name: "Title B",
+    id: 1,
+    name: "Year",
+    selector: (row: any) => row.year,
+  },
+];
+
+const data = [
+  {
+    id: 1,
+    title: "Beetlejuice",
+    year: "1988",
   },
   {
-    name: "Title C",
-  },
-  {
-    name: "Title D",
+    id: 2,
+    title: "Ghostbusters",
+    year: "1984",
   },
 ];
 
 function App() {
   return (
     <div className="App">
-      <DataTable columns={columns} />
+      <DataTable columns={columns} data={data} />
     </div>
   );
 }
