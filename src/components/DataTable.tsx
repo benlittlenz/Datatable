@@ -8,10 +8,21 @@ import Table from "./Table";
 import Head from "./TableHeader";
 
 import { TableProps, TableRow } from "./types";
+import { defaultProps } from "./defaultProps";
 import useColumns from "../hooks/useColumns";
 import { prop, isEmpty } from "../utils";
 
-function DataTable<T>({ columns, data, keyField }: TableProps<T>): JSX.Element {
+function DataTable<T>(props: TableProps<T>): JSX.Element {
+  const {
+    data = defaultProps.data,
+    columns = defaultProps.columns,
+    keyField = defaultProps.keyField,
+    pagination = defaultProps.pagination,
+    paginationPerPage = defaultProps.paginationPerPage,
+    paginationRowsPerPageOptions = defaultProps.paginationRowsPerPageOptions,
+    paginationTotalRows = defaultProps.paginationTotalRows,
+  } = props;
+  
   const { tableColumns } = useColumns(columns);
   console.log("COLUMN HOOK", tableColumns);
   const sortedData = React.useMemo(() => {
@@ -22,27 +33,25 @@ function DataTable<T>({ columns, data, keyField }: TableProps<T>): JSX.Element {
     return sortedData.slice(0, 25);
   }, [sortedData]);
   return (
-    <div>
-      <Table role="table">
-        <Head role="rowgroup">
-          <HeadRow role="row">
-            {tableColumns.map((column) => (
-              <Column key={column.id} column={column} />
-            ))}
-          </HeadRow>
-        </Head>
-        <Body role="rowgroup">
-          {tableRows.map((row, i) => {
-            const key = prop(row as TableRow, (keyField = "id")) as string | number;
-            const id = isEmpty(key) ? i : key;
+    <Table role="table">
+      <Head role="rowgroup">
+        <HeadRow role="row">
+          {tableColumns.map((column) => (
+            <Column key={column.id} column={column} />
+          ))}
+        </HeadRow>
+      </Head>
+      <Body role="rowgroup">
+        {tableRows.map((row, i) => {
+          const key = prop(row as TableRow, keyField) as string | number;
+          const id = isEmpty(key) ? i : key;
 
-            return (
-              <Row id={id} rowIndex={i} columns={columns} row={row} key={id} keyField={keyField} />
-            );
-          })}
-        </Body>
-      </Table>
-    </div>
+          return (
+            <Row id={id} rowIndex={i} columns={columns} row={row} key={id} keyField={keyField} />
+          );
+        })}
+      </Body>
+    </Table>
   );
 }
 

@@ -7,6 +7,11 @@ export type TableProps<T> = {
   columns: TableColumn<T>[];
   data: T[];
   keyField?: string;
+  pagination?: boolean;
+  paginationPerPage?: number;
+  paginationResetDefaultPage?: boolean;
+  paginationRowsPerPageOptions?: number[];
+  paginationTotalRows?: number;
 };
 
 export type TableColumnBase = {

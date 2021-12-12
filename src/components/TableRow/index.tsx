@@ -10,6 +10,7 @@ const TableRowStyle = styled.div`
   align-content: stretch;
   width: 100%;
   box-sizing: border-box;
+  background-color: #f8fafc;
 `;
 
 type TableRowProps<T> = {
