@@ -104,7 +104,7 @@ const data = [
 function App() {
   return (
     <div className="App">
-      <DataTable columns={columns} data={data} pagination />
+      <DataTable columns={columns} data={data} pagination selectableRows />
     </div>
   );
 }

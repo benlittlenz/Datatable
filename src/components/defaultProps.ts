@@ -5,6 +5,14 @@ export const defaultProps = {
   data: [],
   title: "",
   keyField: "id",
+
+  // Select rows props
+  selectableRows: false,
+  selectableRowsComponent: "input" as const,
+  selectableRowsComponentProps: {},
+  selectableRowDisabled: null,
+
+  // Pagination props
   pagination: false,
   paginationDefaultPage: 1,
   paginationResetDefaultPage: false,

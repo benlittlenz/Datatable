@@ -86,6 +86,7 @@ function Pagination({
   rowsPerPage,
   rowCount,
   currentPage,
+
   direction = Direction.AUTO,
   paginationRowsPerPageOptions = defaultProps.paginationRowsPerPageOptions,
   paginationIconLastPage = defaultProps.paginationIconLastPage,

@@ -7,6 +7,7 @@ import HeadRow from "./HeaderRow";
 import Table from "./Table";
 import Head from "./TableHeader";
 import NativePagination from "./Pagination";
+import ColumnCheckbox from "./ColumnCheckbox";
 
 import { TableProps, TableRow } from "./types";
 import { defaultProps } from "./defaultProps";
@@ -18,8 +19,12 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
     data = defaultProps.data,
     columns = defaultProps.columns,
     keyField = defaultProps.keyField,
-    pagination = defaultProps.pagination,
+    selectableRows = defaultProps.selectableRows,
+    selectableRowsComponent = defaultProps.selectableRowsComponent,
+    selectableRowsComponentProps = defaultProps.selectableRowsComponentProps,
+    selectableRowDisabled = defaultProps.selectableRowDisabled,
     // paginationTotalRows = defaultProps.paginationTotalRows,
+    pagination = defaultProps.pagination,
     paginationDefaultPage = defaultProps.paginationDefaultPage,
     // paginationResetDefaultPage = defaultProps.paginationResetDefaultPage,
     paginationPerPage = defaultProps.paginationPerPage,
@@ -70,6 +75,19 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
       <Table role="table">
         <Head role="rowgroup">
           <HeadRow role="row">
+            {selectableRows && (
+              <ColumnCheckbox
+                allSelected={false}
+                selectedRows={[]}
+                selectableRowsComponent={selectableRowsComponent}
+                selectableRowsComponentProps={selectableRowsComponentProps}
+                selectableRowDisabled={selectableRowDisabled}
+                rowData={tableRows}
+                keyField={keyField}
+                // mergeSelections={mergeSelections}
+                onSelectAllRows={() => console.log("ALL ROWS SELECTED")}
+              />
+            )}
             {tableColumns.map((column) => (
               <Column key={column.id} column={column} />
             ))}

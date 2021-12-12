@@ -1,7 +1,9 @@
 export type Primitive = string | number | boolean | bigint;
 export type Selector<T> = (row: T, rowIndex?: number) => Primitive;
 export type Format<T> = (row: T, rowIndex: number) => React.ReactNode;
+export type ComponentProps = Record<string, unknown>;
 export type TableRow = Record<string, unknown>;
+export type RowState<T> = ((row: T) => boolean) | null;
 
 export type PaginationChangePage = (page: number, totalRows: number) => void;
 export type PaginationChangeRowsPerPage = (currentRowsPerPage: number, currentPage: number) => void;
@@ -18,6 +20,11 @@ export type TableProps<T> = {
   columns: TableColumn<T>[];
   data: T[];
   keyField?: string;
+  selectableRows?: boolean;
+  selectableRowsComponent?: "input" | React.ReactNode;
+  selectableRowsComponentProps?: ComponentProps;
+  selectableRowDisabled?: RowState<T>;
+
   pagination?: boolean;
   paginationComponent?: PaginationComponent;
   paginationComponentOptions?: PaginationOptions;

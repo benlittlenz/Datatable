@@ -17,3 +17,22 @@ export function getNumberOfPages(rowCount: number, rowsPerPage: number): number 
 export function recalculatePage(prevPage: number, nextPage: number): number {
   return Math.min(prevPage, nextPage);
 }
+
+export function handleFunctionProps(
+  object: { [key: string]: unknown },
+  ...args: unknown[]
+): { [key: string]: unknown } {
+  let newObject;
+
+  Object.keys(object)
+    .map((o) => object[o])
+    .forEach((value, index) => {
+      const oldObject = object;
+
+      if (typeof value === "function") {
+        newObject = { ...oldObject, [Object.keys(object)[index]]: value(...args) };
+      }
+    });
+
+  return newObject || object;
+}
