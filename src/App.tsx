@@ -13,6 +13,11 @@ const columns = [
     name: "Year",
     selector: (row: any) => row.year,
   },
+  {
+    id: 2,
+    name: "Age",
+    selector: (row: any) => row.age,
+  },
 ];
 
 const data = [
@@ -20,11 +25,13 @@ const data = [
     id: 0,
     title: "Beetlejuice",
     year: "1988",
+    age: 27,
   },
   {
     id: 1,
     title: "Ghostbusters",
     year: "1984",
+    age: 56,
   },
 ];
 

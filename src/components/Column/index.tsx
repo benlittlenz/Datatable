@@ -12,8 +12,24 @@ const ColumnStyled = styled.div`
   width: 100%;
 `;
 
+const ColumnText = styled.div`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
 function TableCol<T>({ column }: TableColProps<T>): JSX.Element | null {
-  return <ColumnStyled>{column.name}</ColumnStyled>;
+  return (
+    <ColumnStyled data-column-id={column.id}>
+      {typeof column.name === "string" ? (
+        <ColumnText title={column.name} data-column-id={column.id}>
+          {column.name}
+        </ColumnText>
+      ) : (
+        column.name
+      )}
+    </ColumnStyled>
+  );
 }
 
 export default TableCol;

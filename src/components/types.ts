@@ -10,8 +10,22 @@ export type TableProps<T> = {
 };
 
 export type TableColumnBase = {
+  allowOverflow?: boolean;
+  button?: boolean;
+  center?: boolean;
+  compact?: boolean;
+  reorder?: boolean;
+  grow?: number;
   id?: string | number;
+  ignoreRowClick?: boolean;
+  maxWidth?: string;
+  minWidth?: string;
   name?: string | number | React.ReactNode;
+  omit?: boolean;
+  right?: boolean;
+  sortable?: boolean;
+  width?: string;
+  wrap?: boolean;
 };
 
 export interface TableColumn<T> extends TableColumnBase {

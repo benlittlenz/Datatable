@@ -1,13 +1,24 @@
 import * as React from "react";
-import styled from "styled-components";
-import { TableColumn, Selector, Format } from "../types";
+import styled, { css } from "styled-components";
+import { CellExtended } from "../Cell";
+import { TableColumn, Format, Selector } from "../types";
 
-const CellStyle = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  line-height: normal;
+interface CellStyleProps {
+  renderAsCell: boolean | undefined;
+}
+
+const overflowCSS = css<CellStyleProps>`
+  div:first-child {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: ellipsis;
+  }
+`;
+
+const CellStyle = styled(CellExtended).attrs((props) => ({
+  style: props.style,
+}))<CellStyleProps>`
+  ${({ renderAsCell }) => !renderAsCell && overflowCSS};
 `;
 
 interface CellProps<T> {
@@ -18,15 +29,19 @@ interface CellProps<T> {
   rowIndex: number;
 }
 
-function Cell<T>({ id, column, rowIndex, dataTag, row }: CellProps<T>): JSX.Element {
-  console.log("CELL ", column, row);
-  console.log("dataTag", dataTag);
+function Cell<T>({ id, column, row, rowIndex, dataTag }: CellProps<T>): JSX.Element {
   return (
-    <CellStyle id={id} data-column-id={column.id} role="gridcell">
+    <CellStyle
+      id={id}
+      data-column-id={column.id}
+      role="gridcell"
+      data-tag={dataTag}
+      renderAsCell={!!column.cell}
+    >
       {!column.cell && (
         <div data-tag={dataTag}>{getProperty(row, column.selector, column.format, rowIndex)}</div>
       )}
-      {/* {column.cell && column.cell(row, column, id)} */}
+      {column.cell && column.cell(row, rowIndex, column, id)}
     </CellStyle>
   );
 }
