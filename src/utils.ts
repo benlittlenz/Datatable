@@ -13,3 +13,7 @@ export function isEmpty(field: string | number | undefined = ""): boolean {
 export function getNumberOfPages(rowCount: number, rowsPerPage: number): number {
   return Math.ceil(rowCount / rowsPerPage);
 }
+
+export function recalculatePage(prevPage: number, nextPage: number): number {
+  return Math.min(prevPage, nextPage);
+}
