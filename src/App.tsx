@@ -17,12 +17,12 @@ const columns = [
 
 const data = [
   {
-    id: 1,
+    id: 0,
     title: "Beetlejuice",
     year: "1988",
   },
   {
-    id: 2,
+    id: 1,
     title: "Ghostbusters",
     year: "1984",
   },
