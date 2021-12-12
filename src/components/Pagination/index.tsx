@@ -78,7 +78,7 @@ interface PaginationProps {
   paginationIconNext?: React.ReactNode;
   paginationIconPrevious?: React.ReactNode;
   paginationComponentOptions?: PaginationOptions;
-  // onChangePage: (page: number) => void;
+  onChangePage: (page: number) => void;
   onChangeRowsPerPage: (numRows: number, currentPage: number) => void;
 }
 
@@ -94,9 +94,8 @@ function Pagination({
   paginationIconPrevious = defaultProps.paginationIconPrevious,
   paginationComponentOptions = defaultProps.paginationComponentOptions,
   onChangeRowsPerPage = defaultProps.onChangeRowsPerPage,
-  // onChangePage = defaultProps.onChangePage,
-}:
-PaginationProps): JSX.Element {
+  onChangePage = defaultProps.onChangePage,
+}: PaginationProps): JSX.Element {
   const windowSize = useWindowSize();
   const isRTL = useRTL(direction);
   const shouldShow = windowSize.width && windowSize.width > SMALL;
@@ -115,15 +114,15 @@ PaginationProps): JSX.Element {
     () => onChangePage(currentPage - 1),
     [currentPage, onChangePage]
   );
-  // const handleNext = React.useCallback(
-  //   () => onChangePage(currentPage + 1),
-  //   [currentPage, onChangePage]
-  // );
-  // const handleFirst = React.useCallback(() => onChangePage(1), [onChangePage]);
-  // const handleLast = React.useCallback(
-  //   () => onChangePage(getNumberOfPages(rowCount, rowsPerPage)),
-  //   [onChangePage, rowCount, rowsPerPage]
-  // );
+  const handleNext = React.useCallback(
+    () => onChangePage(currentPage + 1),
+    [currentPage, onChangePage]
+  );
+  const handleFirst = React.useCallback(() => onChangePage(1), [onChangePage]);
+  const handleLast = React.useCallback(
+    () => onChangePage(getNumberOfPages(rowCount, rowsPerPage)),
+    [onChangePage, rowCount, rowsPerPage]
+  );
   const handleRowsPerPage = React.useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) =>
       onChangeRowsPerPage(Number(e.target.value), currentPage),
@@ -169,7 +168,7 @@ PaginationProps): JSX.Element {
           type="button"
           aria-label="First Page"
           aria-disabled={disabledLesser}
-          // onClick={handleFirst}
+          onClick={handleFirst}
           disabled={disabledLesser}
           isRTL={isRTL}
         >
@@ -181,7 +180,7 @@ PaginationProps): JSX.Element {
           type="button"
           aria-label="Previous Page"
           aria-disabled={disabledLesser}
-          // onClick={handlePrevious}
+          onClick={handlePrevious}
           disabled={disabledLesser}
           isRTL={isRTL}
         >
@@ -195,7 +194,7 @@ PaginationProps): JSX.Element {
           type="button"
           aria-label="Next Page"
           aria-disabled={disabledGreater}
-          // onClick={handleNext}
+          onClick={handleNext}
           disabled={disabledGreater}
           isRTL={isRTL}
         >
@@ -207,7 +206,7 @@ PaginationProps): JSX.Element {
           type="button"
           aria-label="Last Page"
           aria-disabled={disabledGreater}
-          // onClick={handleLast}
+          onClick={handleLast}
           disabled={disabledGreater}
           isRTL={isRTL}
         >

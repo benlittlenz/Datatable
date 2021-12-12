@@ -50,6 +50,10 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
     return sortedData;
   }, [currentPage, pagination, rowsPerPage, sortedData]);
 
+  const handleChangePage = React.useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
+
   const handleChangeRowsPerPage = React.useCallback(
     (newRowsPerPage: number) => {
       const rowCount = tableRows.length;
@@ -85,7 +89,7 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
       {enabledPagination && (
         <div>
           <NativePagination
-            // onChangePage={handleChangePage}
+            onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
             rowCount={sortedData.length}
             currentPage={currentPage}
