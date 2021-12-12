@@ -6,6 +6,7 @@ import Row from "./TableRow";
 import HeadRow from "./HeaderRow";
 import Table from "./Table";
 import Head from "./TableHeader";
+import NativePagination from "./Pagination"
 
 import { TableProps, TableRow } from "./types";
 import { defaultProps } from "./defaultProps";
@@ -18,27 +19,35 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
     columns = defaultProps.columns,
     keyField = defaultProps.keyField,
     pagination = defaultProps.pagination,
-    paginationTotalRows = defaultProps.paginationTotalRows,
+    // paginationTotalRows = defaultProps.paginationTotalRows,
     paginationDefaultPage = defaultProps.paginationDefaultPage,
-    paginationResetDefaultPage = defaultProps.paginationResetDefaultPage,
+    // paginationResetDefaultPage = defaultProps.paginationResetDefaultPage,
     paginationPerPage = defaultProps.paginationPerPage,
-    paginationRowsPerPageOptions = defaultProps.paginationRowsPerPageOptions,
-    paginationIconLastPage = defaultProps.paginationIconLastPage,
-    paginationIconFirstPage = defaultProps.paginationIconFirstPage,
-    paginationIconNext = defaultProps.paginationIconNext,
-    paginationIconPrevious = defaultProps.paginationIconPrevious,
+    // paginationRowsPerPageOptions = defaultProps.paginationRowsPerPageOptions,
+    // paginationIconLastPage = defaultProps.paginationIconLastPage,
+    // paginationIconFirstPage = defaultProps.paginationIconFirstPage,
+    // paginationIconNext = defaultProps.paginationIconNext,
+    // paginationIconPrevious = defaultProps.paginationIconPrevious,
     paginationComponent = defaultProps.paginationComponent,
-    paginationComponentOptions = defaultProps.paginationComponentOptions,
+    // paginationComponentOptions = defaultProps.paginationComponentOptions,
   } = props;
 
   const { tableColumns } = useColumns(columns);
-  console.log("COLUMN HOOK", tableColumns);
+  const enabledPagination = pagination && data.length > 0;
+  const Pagination = paginationComponent;
+
   const sortedData = React.useMemo(() => {
     return [...data].sort();
   }, [data]);
   const tableRows = React.useMemo(() => {
     // TODO: calculate first and last index
-    return sortedData.slice(0, 25);
+    if(pagination) {
+      const lastIndex = paginationDefaultPage * paginationPerPage;
+      const firstIndex = lastIndex - paginationPerPage;
+      return sortedData.slice(firstIndex, lastIndex);
+    }
+
+    return sortedData;
   }, [sortedData]);
   return (
     <Table role="table">

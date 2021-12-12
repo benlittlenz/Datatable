@@ -9,3 +9,7 @@ export function isEmpty(field: string | number | undefined = ""): boolean {
 
   return !field || field.length === 0;
 }
+
+export function getNumberOfPages(rowCount: number, rowsPerPage: number): number {
+  return Math.ceil(rowCount / rowsPerPage);
+}
