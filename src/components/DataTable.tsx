@@ -18,11 +18,19 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
     columns = defaultProps.columns,
     keyField = defaultProps.keyField,
     pagination = defaultProps.pagination,
+    paginationTotalRows = defaultProps.paginationTotalRows,
+    paginationDefaultPage = defaultProps.paginationDefaultPage,
+    paginationResetDefaultPage = defaultProps.paginationResetDefaultPage,
     paginationPerPage = defaultProps.paginationPerPage,
     paginationRowsPerPageOptions = defaultProps.paginationRowsPerPageOptions,
-    paginationTotalRows = defaultProps.paginationTotalRows,
+    paginationIconLastPage = defaultProps.paginationIconLastPage,
+    paginationIconFirstPage = defaultProps.paginationIconFirstPage,
+    paginationIconNext = defaultProps.paginationIconNext,
+    paginationIconPrevious = defaultProps.paginationIconPrevious,
+    paginationComponent = defaultProps.paginationComponent,
+    paginationComponentOptions = defaultProps.paginationComponentOptions,
   } = props;
-  
+
   const { tableColumns } = useColumns(columns);
   console.log("COLUMN HOOK", tableColumns);
   const sortedData = React.useMemo(() => {
