@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { prop } from "../../utils";
 import { TableRow } from "../types";
-
+import TableCellCheckbox from "../TableCellCheckbox";
 import TableCell from "../TableCell";
 
 const TableRowStyle = styled.div`
@@ -10,7 +10,6 @@ const TableRowStyle = styled.div`
   align-content: stretch;
   width: 100%;
   box-sizing: border-box;
-  background-color: #f8fafc;
 `;
 
 type TableRowProps<T> = {
@@ -31,6 +30,7 @@ function Row<T>({
   const rowKeyField = prop(row as TableRow, keyField);
   return (
     <TableRowStyle id={`row-${id}`} role="row">
+      <TableCellCheckbox name={`select-row-${rowKeyField}`} />
       {columns.map((column: any) => {
         console.log("COLUMN >>> ", column);
         return (

@@ -39,7 +39,7 @@ const Button = styled.button<{
   position: relative;
   display: block;
   user-select: none;
-  border: none;
+  border: 1px solid #e5e7eb;
   ${({ isRTL }) => isRTL && "transform: scale(-1, -1)"};
 `;
 
@@ -65,6 +65,8 @@ const Range = styled(Span)`
 
 const RowLabel = styled(Span)`
   margin: 0 4px;
+  color: #374151;
+  letter-spacing: 1px;
 `;
 
 interface PaginationProps {

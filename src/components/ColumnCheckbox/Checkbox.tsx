@@ -14,7 +14,6 @@ const calculateBaseStyle = (disabled: boolean) => ({
 
 interface CheckboxProps {
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component?: any;
   componentOptions?: { [key: string]: unknown };
   indeterminate?: boolean;
@@ -34,7 +33,6 @@ function Checkbox({
 }: CheckboxProps): JSX.Element {
   const setCheckboxRef = (checkbox: HTMLInputElement) => {
     if (checkbox) {
-      // eslint-disable-next-line no-param-reassign
       checkbox.indeterminate = indeterminate;
     }
   };
@@ -49,7 +47,6 @@ function Checkbox({
 
   return (
     <TagName
-      // allow this component to fully control these options
       type="checkbox"
       ref={setCheckboxRef}
       style={baseStyle}
