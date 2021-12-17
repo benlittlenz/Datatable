@@ -14,16 +14,21 @@ const TableCellCheckboxStyle = styled(CellBase)`
 
 type TableCellCheckboxProps = {
   name: string;
+  selected: boolean;
+  setSelected: (selected: boolean) => void;
 };
 
-function TableCellCheckbox({ name }: TableCellCheckboxProps): JSX.Element {
+function TableCellCheckbox({ name, selected, setSelected }: TableCellCheckboxProps): JSX.Element {
   return (
-    <TableCellCheckboxStyle
-      onClick={(e: React.MouseEvent) => e.stopPropagation()}
-      className="rdt_TableCell"
-      noPadding
-    >
-      <input type="checkbox" name={name} aria-label={name} />
+    <TableCellCheckboxStyle onClick={(e: React.MouseEvent) => e.stopPropagation()} noPadding>
+      <input
+        type="checkbox"
+        name={name}
+        checked={selected}
+        aria-checked={selected}
+        onClick={() => setSelected(!selected)}
+        aria-label={name}
+      />
     </TableCellCheckboxStyle>
   );
 }

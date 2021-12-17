@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import { prop } from "../../utils";
 import { TableRow } from "../types";
@@ -27,12 +28,17 @@ function Row<T>({
   keyField = "id",
   row,
 }: TableRowProps<T>): JSX.Element {
+  const [selected, setSelected] = useState(false);
   const rowKeyField = prop(row as TableRow, keyField);
+
   return (
     <TableRowStyle id={`row-${id}`} role="row">
-      <TableCellCheckbox name={`select-row-${rowKeyField}`} />
+      <TableCellCheckbox
+        name={`select-row-${rowKeyField}`}
+        selected={selected}
+        setSelected={setSelected}
+      />
       {columns.map((column: any) => {
-        console.log("COLUMN >>> ", column);
         return (
           <TableCell
             id={`cell-${column.id}-${rowKeyField}`}
