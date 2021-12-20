@@ -73,3 +73,16 @@ export interface PaginationOptions {
   selectAllRowsItem?: boolean;
   selectAllRowsItemText?: string;
 }
+
+export type TableState = {
+  currentPage?: number;
+  rowsPerPage: number;
+};
+
+export interface PaginationRowsPerPageAction {
+  type: "CHANGE_ROWS_PER_PAGE";
+  rowsPerPage: number;
+  page: number;
+}
+
+export type Action = PaginationRowsPerPageAction;

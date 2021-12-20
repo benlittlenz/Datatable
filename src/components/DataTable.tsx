@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { tableReducer } from "./reducer";
 import Column from "./Column";
 import Body from "./TableBody";
 import Row from "./TableRow";
@@ -9,7 +9,7 @@ import Head from "./TableHeader";
 import NativePagination from "./Pagination";
 import ColumnCheckbox from "./ColumnCheckbox";
 
-import { TableProps, TableRow } from "./types";
+import { TableProps, TableRow, TableState, Action } from "./types";
 import { defaultProps } from "./defaultProps";
 import useColumns from "../hooks/useColumns";
 import { prop, isEmpty, getNumberOfPages, recalculatePage } from "../utils";
@@ -36,9 +36,16 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
     paginationComponentOptions = defaultProps.paginationComponentOptions,
   } = props;
 
-  const [currentPage, setCurrentPage] = useState(paginationDefaultPage);
-  const [rowsPerPage, setRowsPerPage] = useState(paginationPerPage);
+  const [{ rowsPerPage }, dispatch] = React.useReducer<React.Reducer<TableState, Action>>(
+    tableReducer,
+    {
+      rowsPerPage: paginationPerPage,
+    }
+  );
 
+  const [currentPage, setCurrentPage] = useState(paginationDefaultPage);
+  // const [rowsPerPage, setRowsPerPage] = useState(paginationPerPage);
+  console.log("rowsPerPage", rowsPerPage);
   const { tableColumns } = useColumns(columns);
   const enabledPagination = pagination && data.length > 0;
 
@@ -65,8 +72,13 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
       const updatedPage = getNumberOfPages(rowCount, newRowsPerPage);
       const recalculatedPage = recalculatePage(currentPage, updatedPage);
 
-      setCurrentPage(recalculatedPage);
-      setRowsPerPage(newRowsPerPage);
+      dispatch({
+        type: "CHANGE_ROWS_PER_PAGE",
+        page: recalculatedPage,
+        rowsPerPage: newRowsPerPage,
+      });
+      // setCurrentPage(recalculatedPage);
+      // setRowsPerPage(newRowsPerPage);
     },
     [currentPage, tableRows.length]
   );
