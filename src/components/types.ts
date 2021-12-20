@@ -75,9 +75,14 @@ export interface PaginationOptions {
 }
 
 export type TableState = {
-  currentPage?: number;
+  currentPage: number;
   rowsPerPage: number;
 };
+
+export interface PaginationPageAction {
+  type: "CHANGE_PAGE";
+  page: number;
+}
 
 export interface PaginationRowsPerPageAction {
   type: "CHANGE_ROWS_PER_PAGE";
@@ -85,4 +90,4 @@ export interface PaginationRowsPerPageAction {
   page: number;
 }
 
-export type Action = PaginationRowsPerPageAction;
+export type Action = PaginationRowsPerPageAction | PaginationPageAction;

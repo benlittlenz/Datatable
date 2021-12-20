@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { tableReducer } from "./reducer";
 import Column from "./Column";
 import Body from "./TableBody";
@@ -36,14 +36,14 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
     paginationComponentOptions = defaultProps.paginationComponentOptions,
   } = props;
 
-  const [{ rowsPerPage }, dispatch] = React.useReducer<React.Reducer<TableState, Action>>(
-    tableReducer,
-    {
-      rowsPerPage: paginationPerPage,
-    }
-  );
+  const [{ currentPage, rowsPerPage }, dispatch] = React.useReducer<
+    React.Reducer<TableState, Action>
+  >(tableReducer, {
+    currentPage: paginationDefaultPage,
+    rowsPerPage: paginationPerPage,
+  });
 
-  const [currentPage, setCurrentPage] = useState(paginationDefaultPage);
+  // const [currentPage, setCurrentPage] = useState(paginationDefaultPage);
   // const [rowsPerPage, setRowsPerPage] = useState(paginationPerPage);
   console.log("rowsPerPage", rowsPerPage);
   const { tableColumns } = useColumns(columns);
@@ -63,7 +63,10 @@ function DataTable<T>(props: TableProps<T>): JSX.Element {
   }, [currentPage, pagination, rowsPerPage, sortedData]);
 
   const handleChangePage = React.useCallback((page: number) => {
-    setCurrentPage(page);
+    dispatch({
+      type: "CHANGE_PAGE",
+      page,
+    });
   }, []);
 
   const handleChangeRowsPerPage = React.useCallback(
